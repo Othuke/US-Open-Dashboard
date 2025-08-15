@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <style>
+        :root {
+            --primary-color: #002688;
+            --secondary-color: #F7CD01;
+            --accent-color: #C5212E;
+            --light-bg-color: #F8F9FA;
+            --card-bg-color: #FFFFFF;
+            --font-color: #333333;
+        }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--light-bg-color), #D6E0F0);
+            color: var(--font-color);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #dashboard-wrapper {
+            position: relative;
+            width: 1600px;
+            height: 1024px;
+            transform-origin: top left;
+        }
+        .dashboard-container {
+            width: 1600px;
+            height: 1024px;
+            padding-top: 185px;
+            padding-left: 350px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-rows: 113.29px 137.52px 323.59px 323.59px;
+            row-gap: 30px;
+        }
+
+        .header-row {
+            padding: 0 25.2px;
+            width: 1549.6px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            align-items: center;
+        }
+        #logo-container img {
+           display: block;
+
+        }
+
+        #logo-container {
+            position: absolute;
+            right: 0; /* push logo container to the right edge */
+            top: 50%;
+            transform: translateY(-50%); /* vertically center it */
+        }
+        .card-row {
+            padding: 0 25.39px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+        .chart-row-3 {
+            display: flex;
+            gap: 25.39px;
+            padding-left: 25.39px;
+        }
+        .chart-row-4 {
+            display: flex;
+            gap: 25.39px;
+            padding: 0 25.39px;
+        }
+        
+        #header-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            color: var(--primary-color);
+        }
+        h2 {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 4px 0 0 0;
+            color: #666;
+        }
+        
+        }
+        #year-dropdown-container {
+            position: relative;
+            cursor: pointer;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px 12px;
+            background-color: var(--card-bg-color);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .dropdown-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg-color);
+            border: 1px solid #ccc;
+            border-top: none;
+            z-index: 1000;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown-options label {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .dropdown-options input[type="radio"] {
+            margin-right: 8px;
+        }
+        
+        .card {
+            width: 289.6px;
+            height: 137.52px;
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding:0 10px;
+            box-sizing: border-box;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 8px;
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 8px 0 0 8px;
+        }
+        .card-icon {
+            font-size: 48px;
+            color: var(--primary-color);
+            padding: 16px;
+        }
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            padding-left: 16px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        .card-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .chart-card {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 16px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .chart-card h3 {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+        }
+        .chart-container {
+            width: 100%;
+            height: 90%;
+        }
+
+        #sinner-alcaraz-card {
+            width: 842.08px;
+            height: 323.59px;
+            display: flex;
+            flex-direction: column;
+        }
+        #sinner-alcaraz-charts {
+            display: flex;
+            flex-grow: 1;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        #chart-1a-container, #chart-1b-container {
+            width: 50%;
+            height: 100%;
+        }
+        #top10-card {
+            width: 349.6px;
+            height: calc(323.59px * 2 + 28px);
+        }
+        #outcomes-card {
+            width: 307.04px;
+            height: 323.59px;
+        }
+        #semifinal-card {
+            width: 504.16px;
+            height: 323.59px;
+        }
+        #dominant-wins-card {
+            width: 308.64px;
+            height: 323.59px;
+        }
+        #win-rate-card {
+            width: 307.04px;
+            height: 323.59px;
+        }
+
+        #spacer {
+            flex: 1;
+            width: 10px;
+            visibility: hidden; /* Keeps the space but hides the element */
+        }
+        .error-message {
+            color: var(--accent-color);
+            font-size: 16px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="dashboard-wrapper">
+        <div class="dashboard-container">
+            
+            <div class="header-row">
+                <div id="logo-container">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Usopen-horizontal-logo.svg" 
+                         alt="US Open Logo" 
+                         style="height: 60px;">
+                </div>
+                <div id="header-text">
+                    <h1>US Open Dashboard</h1>
+                    <h2>Key trends and business insights from the last 5 Years</h2>
+                </div>
+            
+            </div>
+
+            <div class="card-row">
+                <div class="card" style="--primary-color: #002688;">
+                    <i class="fa-solid fa-table-tennis-paddle-ball card-icon"></i>
+                    <div class="card-content">
+                        <span class="card-title">Total Matches</span>
+                        <span class="card-value" id="total-matches">...</span>
+                    </div>
+                </div>
+                <div class="card" style="--primary-color: #F7CD01;">
+                    <i class="fa-solid fa-users card-icon"></i>
+                    <div class="card-content">
+                        <span class="card-title">Unique Players</span>
+                        <span class="card-value" id="unique-players">...</span>
+                    </div>
+                </div>
+                <div class="card" style="--primary-color: #C5212E;">
+                    <i class="fa-solid fa-hourglass-half card-icon"></i>
+                    <div class="card-content">
+                        <span class="card-title">Avg Match Length</span>
+                        <span class="card-value" id="avg-match-length">...</span>
+                    </div>
+                </div>
+                <div class="card" style="--primary-color: #60B54E;">
+                    <i class="fa-solid fa-chart-line card-icon"></i>
+                    <div class="card-content">
+                        <span class="card-title">5 Setters</span>
+                        <span class="card-value" id="five-setters">...</span>
+                    </div>
+                </div>
+                <div class="card" style="--primary-color: #000000;">
+                    <i class="fa-solid fa-arrows-down-to-line card-icon"></i>
+                    <div class="card-content">
+                        <span class="card-title">Upsets</span>
+                        <span class="card-value" id="upsets">...</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-row-3">
+                <div id="sinner-alcaraz-card" class="chart-card">
+                    <h3>Carlos Alcaraz Vs Jannik Sinner</h3>
+                    <div id="sinner-alcaraz-charts">
+                        <div id="chart-1a-container" class="chart-container"></div>
+                        <div id="chart-1b-container" class="chart-container"></div>
+                    </div>
+                </div>
+                <div id="top10-card" class="chart-card">
+                    <h3>Top 10 Most Match Wins</h3>
+                    <div id="chart-2-container" class="chart-container"></div>
+                </div>
+                <div id="outcomes-card" class="chart-card">
+                    <h3>Match Outcomes</h3>
+                    <div id="chart-3-container" class="chart-container"></div>
+                </div>
+            </div>
+            
+            <div class="chart-row-4">
+                <div id="semifinal-card" class="chart-card">
+                    <h3>Most Semi-Final Appearances</h3>
+                    <div id="chart-4-container" class="chart-container"></div>
+                </div>
+                <div id="dominant-wins-card" class="chart-card">
+                    <h3>Dominant Wins (Top 10)</h3>
+                    <div id="chart-5-container" class="chart-container"></div>
+                </div>
+                <div id="spacer" class="chart-card">
+                </div>
+                <div id="win-rate-card" class="chart-card">
+                    <h3>Win Rate by Ranking Tier</h3>
+                    <div id="chart-6-container" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const THEME_COLORS = {
+            primary: '#002688',
+            secondary: '#F7CD01',
+            accent: '#C5212E',
+            text: '#333333',
+            white: '#FFFFFF'
+        };
+        const originalWidth = 1600;
+        const originalHeight = 1024;
+        let availableYears = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            adjustScale();
+            window.addEventListener('resize', adjustScale);
+            google.script.run.withSuccessHandler(renderDashboard).getAllDashboardData();
+        });
+
+        function adjustScale() {
+            const wrapper = document.getElementById('dashboard-wrapper');
+            const scaleX = window.innerWidth / originalWidth;
+            const scaleY = window.innerHeight / originalHeight;
+            const scale = Math.min(scaleX, scaleY);
+            wrapper.style.transform = `scale(${scale})`;
+        }
+
+        function initializeDashboard(data) {
+            if (!data) {
+                document.getElementById('dashboard-wrapper').innerHTML = '<div class="error-message">Could not load dashboard data. Please check the Apps Script logs.</div>';
+                return;
+            }
+            
+            renderDashboard(data);
+        }
+
+        function renderDashboard(data) {
+            updateCardValues(data.cardData);
+            renderSinnerAlcarazChart(data.sinnerAlcarazData);
+            renderTop10WinsChart(data.top10WinsData);
+            renderMatchOutcomesChart(data.matchOutcomeData);
+            renderSemiFinalChart(data.semiFinalData);
+            renderDominantWinsChart(data.dominantWinsData);
+            renderWinRateChart(data.winRateData);
+        }
+
+        function updateCardValues(data) {
+            if (data) {
+                document.getElementById('total-matches').innerText = data.totalMatches || 0;
+                document.getElementById('unique-players').innerText = data.uniquePlayers || 0;
+                document.getElementById('avg-match-length').innerText = data.avgMatchLength || 0;
+                document.getElementById('five-setters').innerText = data.fiveSetters || 0;
+                document.getElementById('upsets').innerText = data.upsets || 0;
+            }
+        }
+
+        function renderSinnerAlcarazChart(data) {
+            if (!data || !data.years || data.years.length === 0) return;
+            const stageToLabel = { 0: 'R1', 1: 'R2', 2: 'R3', 3: 'R4', 4: 'QF', 5: 'SF', 6: 'Final' };
+            
+            const chart1aOptions = {
+                series: [{ name: 'Sinner J.', data: data.sinnerWins }, { name: 'Alcaraz C.', data: data.alcarazWins }],
+                chart: { type: 'bar', height: '100%', toolbar: { show: false }, background: 'transparent' },
+                plotOptions: { bar: { horizontal: false, columnWidth: '55%' } },
+                colors: [THEME_COLORS.primary, THEME_COLORS.secondary],
+                dataLabels: { 
+                    enabled: true, 
+                    style: { colors: [THEME_COLORS.white, THEME_COLORS.text] }
+                },
+                xaxis: { categories: data.years, labels: { show: true } },
+                yaxis: { labels: { show: false } },
+                grid: { show: false },
+                legend: { show: true, position: 'top' },
+                title: { text: 'Matches Won per Year', align: 'left', style: { color: THEME_COLORS.text, fontSize: '14px' } }
+            };
+            const chart1a = new ApexCharts(document.querySelector("#chart-1a-container"), chart1aOptions);
+            chart1a.render();
+
+            const chart1bOptions = {
+                series: [{ name: 'Sinner J.', data: data.sinnerStages }, { name: 'Alcaraz C.', data: data.alcarazStages }],
+                chart: { height: '100%', type: 'line', zoom: { enabled: false }, toolbar: { show: false }, background: 'transparent' },
+                colors: [THEME_COLORS.primary, THEME_COLORS.secondary],
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth' },
+                markers: { size: 5 },
+                xaxis: { categories: data.years, labels: { show: true } },
+                yaxis: {
+                    min: 1, max: 8,
+                    labels: {
+                        formatter: function(val) { return stageToLabel[val] || ''; },
+                        style: { colors: [THEME_COLORS.text] }
+                    }
+                },
+                tooltip: { y: { formatter: function(val) { return stageToLabel[val]; } } },
+                grid: { show: false },
+                legend: { show: true, position: 'top' },
+                title: { text: 'Tournament Stage Reached per Year', align: 'left', style: { color: THEME_COLORS.text, fontSize: '14px' } }
+            };
+            const chart1b = new ApexCharts(document.querySelector("#chart-1b-container"), chart1bOptions);
+            chart1b.render();
+        }
+
+        function renderTop10WinsChart(data) {
+            if (!data || !data.players || data.players.length === 0) return;
+            const options = {
+                series: [{ name: 'Matches Won', data: data.matchesWon }, { name: 'Sets Won', data: data.setsWon }],
+                chart: { type: 'bar', height: '100%', stacked: false, toolbar: { show: false }, background: 'transparent' },
+                plotOptions: { bar: { horizontal: true, dataLabels: { position: 'center' } } },
+                dataLabels: { 
+                    enabled: true, 
+                    style: { colors: [THEME_COLORS.white, THEME_COLORS.text] }
+                },
+                stroke: { width: 1, colors: ['#fff'] },
+                colors: [THEME_COLORS.primary, THEME_COLORS.secondary],
+                xaxis: { categories: data.players, labels: { show: false } },
+                yaxis: { labels: { show: true, maxWidth: 400 } },
+                grid: { padding: {left: 35}, show: false },
+                tooltip: { y: { formatter: function(val) { return val; } } },
+                legend: { show: true, position: 'top' }
+            };
+            const chart = new ApexCharts(document.querySelector("#chart-2-container"), options);
+            chart.render();
+        }
+
+        function renderMatchOutcomesChart(data) {
+            if (!data || Object.keys(data).length === 0) return;
+            const chartContainer = document.querySelector("#chart-3-container");
+            chartContainer.innerHTML = '';
+            
+            const options = {
+                series: Object.values(data),
+                labels: Object.keys(data),
+                chart: { type: 'donut', height: '90%', toolbar: { show: false }, background: 'transparent' },
+                colors: [THEME_COLORS.primary, THEME_COLORS.accent, THEME_COLORS.secondary, THEME_COLORS.light],
+                dataLabels: { 
+                  enabled: true,
+                  formatter: function (val, opts) {
+                    return opts.w.globals.series[opts.seriesIndex];
+                  }
+                },
+                plotOptions: { pie: { donut: { size: '65%', labels: { show: true, total: { show: true, label: 'Total', color: THEME_COLORS.text } } } } },
+                legend: { show: true, position: 'top' },
+                responsive: [{ breakpoint: 480, options: { chart: { width: 200 } } }]
+            };
+            const chart = new ApexCharts(chartContainer, options);
+            chart.render();
+        }
+
+        function renderSemiFinalChart(data) {
+            if (!data || !data.players || data.players.length === 0) return;
+            const options = {
+                series: [{ name: 'Appearances', data: data.appearances }],
+                chart: { type: 'bar', height: '100%', toolbar: { show: false }, background: 'transparent' },
+                plotOptions: { bar: { horizontal: true } },
+                dataLabels: { enabled: true },
+                colors: [THEME_COLORS.primary],
+                xaxis: { categories: data.players, labels: { show: false } },
+                yaxis: { labels: { show: true, maxWidth: 400 } },
+                grid: { padding: {left: 35}, show: false },
+                legend: { show: false }
+            };
+            const chart = new ApexCharts(document.querySelector("#chart-4-container"), options);
+            chart.render();
+        }
+
+        function renderDominantWinsChart(data) {
+            if (!data || !data.players || data.players.length === 0) return;
+            const options = {
+                series: [{ name: 'Dominant Wins', data: data.wins }],
+                chart: { type: 'bar', height: '100%', toolbar: { show: false }, background: 'transparent' },
+                plotOptions: { bar: { horizontal: true } },
+                dataLabels: { enabled: true },
+                colors: [THEME_COLORS.primary],
+                xaxis: { categories: data.players, labels: { show: false } },
+                yaxis: { labels: { show: true, maxWidth: 400 } },
+                grid: { padding: {left: 35}, show: false },
+                legend: { show: false }
+            };
+            const chart = new ApexCharts(document.querySelector("#chart-5-container"), options);
+            chart.render();
+        }
+
+        function renderWinRateChart(data) {
+            if (!data || data.length === 0) return;
+            const options = {
+                series: [{ name: 'Win Rate', data: data.map(item => item.winRate) }],
+                chart: { type: 'bar', height: '100%', toolbar: { show: false }, background: 'transparent' },
+                plotOptions: { bar: { horizontal: false } },
+                dataLabels: { enabled: true, formatter: function (val) { return val + "%"; } },
+                colors: [THEME_COLORS.primary],
+                xaxis: { categories: data.map(item => item.tier), labels: { show: true } },
+                yaxis: { labels: { show: false } },
+                grid: { show: false },
+                legend: { show: false }
+            };
+            const chart = new ApexCharts(document.querySelector("#chart-6-container"), options);
+            chart.render();
+        }
+    </script>
+</body>
+</html>
