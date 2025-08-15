@@ -49,7 +49,7 @@ The beauty of data analysis is the continuous opportunity for enhancement. Some 
 -   ApexCharts
 
 
-View the dashboard via this [link]([https://www.football.co.uk](https://script.google.com/macros/s/AKfycbyHmeBUuxO4aLcjbmJHwpuJ89mc0F-QGBhO5RRIJkE/dev)/)
+View the dashboard via this [link](https://script.google.com/macros/s/AKfycbyHmeBUuxO4aLcjbmJHwpuJ89mc0F-QGBhO5RRIJkE/dev)
 
 ### License
 
